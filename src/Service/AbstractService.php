@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Shopify\ApiInterface;
+use Shopify\Object\PaginationLink;
 
 abstract class AbstractService
 {
@@ -77,17 +78,16 @@ abstract class AbstractService
         return $this->lastResponse;
     }
 
-    public function send(Request $request, array $params = array())
+    public function send(Request $request, array $params = [])
     {
-        //Set the empty args array
         $args = [];
 
-        //If the method is get we need to send the args as a query other wise the args need to be send as json
-        if ($request->getMethod() === 'GET') {
-            $args['query'] = $params;
-        }
-        else {
-            $args['json'] = $params;            
+        if (! empty($params)) {
+            if ($request->getMethod() === 'GET') {
+                $args['query'] = $params;
+            } else {
+                $args['json'] = $params;
+            }
         }
 
         //Load the response in a variable
@@ -104,10 +104,9 @@ abstract class AbstractService
         //if there is an error throw an exeption
         //TOD: make costum exeption.
         $json_error = json_last_error();
-        if($json_error === JSON_ERROR_NONE){
+        if ($json_error === JSON_ERROR_NONE) {
             return $return;
-        }
-        else{
+        } else {
             throw new Exception($json_error);
         }
     }
@@ -124,7 +123,17 @@ abstract class AbstractService
         return array_map(
             function ($object) use ($className) {
                 return $this->createObject($className, $object);
-            }, $data
+            },
+            $data
         );
+    }
+
+    /** [fetch pagination link from Shopify Link headers]
+     *  supported only in api version 2019-07 of the API and above
+     * @return PaginationLink
+     */
+    public function getPaginationLink(): PaginationLink
+    {
+        return new PaginationLink($this->getLastResponse()->getHeaderLine('Link'));
     }
 }
