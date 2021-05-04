@@ -8,7 +8,7 @@ use Shopify\Service\AbstractService;
 
 abstract class AbstractApi implements ApiInterface
 {
-    const DEFAULT_API_VERSION = '2020-07';
+    const DEFAULT_API_VERSION = '2021-04';
 
     /**
      * Domain of the Shopify store
@@ -48,7 +48,7 @@ abstract class AbstractApi implements ApiInterface
         foreach ($options as $key => $value) {
             if (!property_exists($this, $key)) {
                 throw new \InvalidArgumentException(
-                    "Property '{$key}' does not exist on ".get_called_class()
+                    "Property '{$key}' does not exist on " . get_called_class()
                 );
             }
             $this->{$key} = $value;
