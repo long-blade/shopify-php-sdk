@@ -2,10 +2,12 @@
 
 namespace Shopify\Service;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Shopify\ApiInterface;
+use Shopify\Object\PaginationLink;
 
 abstract class AbstractService
 {
@@ -21,9 +23,9 @@ abstract class AbstractService
      */
     private $lastResponse;
 
-    const REQUEST_METHOD_GET = 'GET';
-    const REQUEST_METHOD_POST = 'POST';
-    const REQUEST_METHOD_PUT = 'PUT';
+    const REQUEST_METHOD_GET    = 'GET';
+    const REQUEST_METHOD_POST   = 'POST';
+    const REQUEST_METHOD_PUT    = 'PUT';
     const REQUEST_METHOD_DELETE = 'DELETE';
 
     public static function factory(ApiInterface $api)
@@ -76,19 +78,37 @@ abstract class AbstractService
         return $this->lastResponse;
     }
 
-    public function send(Request $request, array $params = array())
+    public function send(Request $request, array $params = [])
     {
-        $args = array();
-        if ($request->getMethod() === 'GET') {
-            $args['query'] = $params;
-        } else {
-            $args['json'] = $params;
+        $args = [];
+
+        if (! empty($params)) {
+            if ($request->getMethod() === 'GET') {
+                $args['query'] = $params;
+            } else {
+                $args['json'] = $params;
+            }
         }
+
+        //Load the response in a variable
         $this->lastResponse = $this->client->send($request, $args);
-        return json_decode(
+        
+        //Decode the json string and save to a varibale.
+        //We do need return this derict so we can check for an json error.
+        $return = json_decode(
             $this->lastResponse->getBody()->getContents(),
             true
         );
+
+        //Check if there are any json error.
+        //if there is an error throw an exeption
+        //TOD: make costum exeption.
+        $json_error = json_last_error();
+        if ($json_error === JSON_ERROR_NONE) {
+            return $return;
+        } else {
+            throw new Exception($json_error);
+        }
     }
 
     public function createObject($className, $data)
@@ -103,7 +123,17 @@ abstract class AbstractService
         return array_map(
             function ($object) use ($className) {
                 return $this->createObject($className, $object);
-            }, $data
+            },
+            $data
         );
+    }
+
+    /** [fetch pagination link from Shopify Link headers]
+     *  supported only in api version 2019-07 of the API and above
+     * @return PaginationLink
+     */
+    public function getPaginationLink(): PaginationLink
+    {
+        return new PaginationLink($this->getLastResponse()->getHeaderLine('Link'));
     }
 }
