@@ -19,7 +19,7 @@ class InventoryItemService extends AbstractService
     public function all(array $params = []){
         $endpoint = 'inventory_items.json';
         $response = $this->request($endpoint, 'GET', $params);
-        return $this->createCollection(InventoryItem::class, $response['inventory_item']);
+        return $this->createCollection(InventoryItem::class, $response['inventory_items']);
     }
 
     /**
