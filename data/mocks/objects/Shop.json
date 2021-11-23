@@ -47,7 +47,6 @@
     "has_storefront": true,
     "eligible_for_card_reader_giveaway": false,
     "finances": true,
-    "setup_required": false,
-    "force_ssl": false
+    "setup_required": false
   }
 }

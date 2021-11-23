@@ -37,7 +37,6 @@ class ShopFields extends AbstractObjectEnum
     const PROVINCE_CODE = 'province_code';
     const SHOP_OWNER = 'shop_owner';
     const SOURCE = 'source';
-    const FORCE_SSL = 'force_ssl';
     const TAX_SHIPPING = 'tax_shipping';
     const TAXES_INCLUDED = 'taxes_included';
     const COUNTY_TAXES = 'county_taxes';
@@ -49,7 +48,7 @@ class ShopFields extends AbstractObjectEnum
 
     public function getFieldTypes()
     {
-        return array(
+        return [
             'address1' => 'string',
             'address2' => 'string',
             'city' => 'string',
@@ -83,7 +82,6 @@ class ShopFields extends AbstractObjectEnum
             'province_code' => 'string',
             'shop_owner' => 'string',
             'source' => 'string',
-            'force_ssl' => 'boolean',
             'tax_shipping' => 'boolean',
             'taxes_included' => 'boolean',
             'county_taxes' => 'string',
@@ -92,6 +90,6 @@ class ShopFields extends AbstractObjectEnum
             'zip' => 'string',
             'has_storefront' => 'boolean',
             'setup_required' => 'boolean'
-        );
+        ];
     }
 }

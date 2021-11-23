@@ -8,7 +8,7 @@ use Shopify\Service\AbstractService;
 
 abstract class AbstractApi implements ApiInterface
 {
-    const DEFAULT_API_VERSION = '2021-04';
+    const DEFAULT_API_VERSION = '2021-07';
 
     /**
      * Domain of the Shopify store
@@ -43,7 +43,7 @@ abstract class AbstractApi implements ApiInterface
      *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         foreach ($options as $key => $value) {
             if (!property_exists($this, $key)) {
