@@ -15,6 +15,10 @@ class OrderFields extends AbstractObjectEnum
     const CLOSED_AT = 'closed_at';
     const CREATED_AT = 'created_at';
     const CURRENCY = 'currency';
+    const CURRENT_TOTAL_DISCOUNTS = 'current_total_discounts';
+    const CURRENT_TOTAL_PRICE = 'current_total_price';
+    const CURRENT_SUBTOTAL_PRICE = 'current_subtotal_price';
+    const CURRENT_TOTAL_TAX = 'current_total_tax';
     const CUSTOMER = 'customer';
     const CUSTOMER_LOCALE = 'customer_locale';
     const DISCOUNT_CODES = 'discount_codes';
@@ -34,10 +38,9 @@ class OrderFields extends AbstractObjectEnum
     const NOTE_ATTRIBUTES = 'note_attributes';
     const NUMBER = 'number';
     const ORDER_NUMBER = 'order_number';
-    const PAYMENT_DETAILS = 'payment_details';
     const PAYMENT_GATEWAY_NAMES = 'payment_gateway_names';
     const PHONE = 'phone';
-    consT PROCESSED_AT = 'processed_at';
+    const PROCESSED_AT = 'processed_at';
     const PROCESSING_METHOD = 'processing_method';
     const REFERRING_SITE = 'referring_site';
     const REFUNDS = 'refunds';
@@ -60,7 +63,7 @@ class OrderFields extends AbstractObjectEnum
 
     public function getFieldTypes()
     {
-        return array(
+        return [
             'app_id' => 'string',
             'billing_address' => 'Address',
             'browser_ip' => 'string',
@@ -73,6 +76,10 @@ class OrderFields extends AbstractObjectEnum
             'contact_email' => 'string',
             'created_at' => 'DateTime',
             'currency' => 'string',
+            'current_total_discounts' => 'string',
+            'current_total_price' => 'string',
+            'current_subtotal_price' => 'string',
+            'current_total_tax' => 'string',
             'customer' => 'Customer',
             'customer_locale' => 'string',
             'discount_codes' => 'DiscountCode[]',
@@ -91,7 +98,6 @@ class OrderFields extends AbstractObjectEnum
             'note_attributes' => 'array',
             'number' => 'string',
             'order_number' => 'string',
-            'payment_details' => 'object',
             'payment_gateway_names' => 'array',
             'phone' => 'string',
             'processed_at' => 'DateTime',
@@ -114,6 +120,6 @@ class OrderFields extends AbstractObjectEnum
             'updated_at' => 'DateTime',
             'user_id' => 'integer',
             'order_status_url' => 'string'
-        );
+        ];
     }
 }
