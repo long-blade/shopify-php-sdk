@@ -27,7 +27,7 @@ class LineItemFields extends AbstractObjectEnum
 
     public function getFieldTypes()
     {
-        return array(
+        return [
             'fulfillable_quantity' => 'integer',
             'fulfillment_service' => 'string',
             'fulfillment_status' => 'string',
@@ -47,7 +47,8 @@ class LineItemFields extends AbstractObjectEnum
             'properties' => 'array',
             'taxable' => 'boolean',
             'tax_lines' => 'TaxLine[]',
-            'total_discount' => 'string'
-        );
+            'total_discount' => 'string',
+            'discount_allocations' => 'DiscountAllocation[]',
+        ];
     }
 }
