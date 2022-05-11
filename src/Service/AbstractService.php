@@ -78,37 +78,19 @@ abstract class AbstractService
         return $this->lastResponse;
     }
 
-    public function send(Request $request, array $params = [])
+    public function send(Request $request, array $params = array())
     {
-        $args = [];
-
-        if (! empty($params)) {
-            if ($request->getMethod() === 'GET') {
-                $args['query'] = $params;
-            } else {
-                $args['json'] = $params;
-            }
+        $args = array();
+        if ($request->getMethod() === 'GET') {
+            $args['query'] = $params;
+        } else {
+            $args['json'] = $params;
         }
-
-        //Load the response in a variable
         $this->lastResponse = $this->client->send($request, $args);
-        
-        //Decode the json string and save to a varibale.
-        //We do need return this derict so we can check for an json error.
-        $return = json_decode(
+        return json_decode(
             $this->lastResponse->getBody()->getContents(),
             true
         );
-
-        //Check if there are any json error.
-        //if there is an error throw an exeption
-        //TOD: make costum exeption.
-        $json_error = json_last_error();
-        if ($json_error === JSON_ERROR_NONE) {
-            return $return;
-        } else {
-            throw new Exception($json_error);
-        }
     }
 
     public function createObject($className, $data)
