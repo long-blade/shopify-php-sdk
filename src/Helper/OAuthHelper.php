@@ -40,7 +40,7 @@ class OAuthHelper
     public function getAccessToken($code, $state = null)
     {
         if (!is_null($state)) {
-            $oldState = $this->storage->get('state');
+            $oldState = $this->storage->get('state') ? $this->storage->get('state') : '';
             $this->validateCsrf($state, $oldState);
             $this->resetCsrf();
         }
