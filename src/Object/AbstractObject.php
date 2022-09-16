@@ -279,7 +279,7 @@ abstract class AbstractObject implements \JsonSerializable
     {
         $keys = array_keys($this->data);
         foreach ($keys as $key) {
-            if (in_array($key, $this->returnedData)) {
+            if (!in_array($key, $this->returnedData)) {
                 unset($this->data[$key]);
             }
         }
