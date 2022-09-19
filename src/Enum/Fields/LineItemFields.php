@@ -28,7 +28,7 @@ class LineItemFields extends AbstractObjectEnum
     // Extra fields for Fulfillment Order usage
     const SHOP_ID = 'shop_id';
     const FULFILLMENT_ORDER_ID = 'fulfillment_order_id';
-    const line_item_id = 'line_item_id';
+    const LINE_ITEM_ID = 'line_item_id';
     const INVENTORY_ITEM_ID = 'inventory_item_id';
 
     public function getFieldTypes()
