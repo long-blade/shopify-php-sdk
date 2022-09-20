@@ -44,6 +44,8 @@ abstract class AbstractObject implements \JsonSerializable
 
     protected $types = array();
 
+    protected $returnedData = array();
+
     public function __construct()
     {
         $enum = static::getFieldsEnum();
@@ -73,7 +75,7 @@ abstract class AbstractObject implements \JsonSerializable
         }
         if (!is_null($value) && !$this->isValidValue($key, $value)) {
             throw new \InvalidArgumentException(
-                "Invalid type for property '{$key}', should be a ".$this->types[$key]." received ".print_r($value,1)
+                "Invalid type for property '{$key}', should be a ".$this->types[$key]." received ".print_r($value, 1)
             );
         }
         $this->data[$key] = $value;
@@ -84,7 +86,6 @@ abstract class AbstractObject implements \JsonSerializable
     public function setDataWithoutValidation($data)
     {
         foreach ($data as $key => $value) {
-
         }
         $this->clearHistory();
     }
@@ -107,6 +108,7 @@ abstract class AbstractObject implements \JsonSerializable
             $type = $this->types[$key];
             $value = $this->castToType($value, $type);
             $this->{$key} = $value;
+            $this->returnedData[] = $key;
         }
     }
 
@@ -154,7 +156,8 @@ abstract class AbstractObject implements \JsonSerializable
                         $obj = new $className();
                         $obj->setData($data);
                         return $obj;
-                    }, $value
+                    },
+                    $value
                 );
             } else {
                 $className = '\\Shopify\\Object\\'.$type;
@@ -169,20 +172,20 @@ abstract class AbstractObject implements \JsonSerializable
     {
         $type = $this->types[$key];
         switch ($type) {
-        case 'string':
-            return is_string($value) || is_integer($value) || is_bool($value);
-        case 'integer':
-            return is_numeric($value);
-        case 'boolean':
-            return is_bool($value);
-        case 'array':
-            return is_array($value);
-        case 'object':
-            return is_object($value);
-        case 'float':
-            return is_float($value);
-        case 'DateTime':
-            return is_a($value, \DateTime::class);
+            case 'string':
+                return is_string($value) || is_integer($value) || is_bool($value);
+            case 'integer':
+                return is_numeric($value);
+            case 'boolean':
+                return is_bool($value);
+            case 'array':
+                return is_array($value);
+            case 'object':
+                return is_object($value);
+            case 'float':
+                return is_float($value);
+            case 'DateTime':
+                return is_a($value, \DateTime::class);
         }
         if (substr($type, -2) == '[]') {
             foreach ($value as $obj) {
@@ -205,7 +208,8 @@ abstract class AbstractObject implements \JsonSerializable
                 $results[$field] = array_map(
                     function ($obj) {
                         return $obj->exportData();
-                    }, $value
+                    },
+                    $value
                 );
             } elseif (is_a($value, AbstractObject::class)) {
                 $results[$field] = $value->exportData();
@@ -238,7 +242,8 @@ abstract class AbstractObject implements \JsonSerializable
                 $value = array_map(
                     function ($data) use ($type) {
                         return $this->instantiate($type, $data);
-                    }, $value
+                    },
+                    $value
                 );
             } else {
                 $value = $this->instantiate($type, $value);
@@ -268,5 +273,17 @@ abstract class AbstractObject implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->data;
+    }
+
+    public function onlyReturnedData()
+    {
+        $keys = array_keys($this->data);
+        foreach ($keys as $key) {
+            if (!in_array($key, $this->returnedData)) {
+                unset($this->data[$key]);
+            }
+        }
+
+        return $this;
     }
 }

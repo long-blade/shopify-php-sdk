@@ -24,6 +24,12 @@ class LineItemFields extends AbstractObjectEnum
     const TAXABLE = 'taxable';
     const TAX_LINES = 'tax_lines';
     const TOTAL_DISCOUNT = 'total_discount';
+    
+    // Extra fields for Fulfillment Order usage
+    const SHOP_ID = 'shop_id';
+    const FULFILLMENT_ORDER_ID = 'fulfillment_order_id';
+    const LINE_ITEM_ID = 'line_item_id';
+    const INVENTORY_ITEM_ID = 'inventory_item_id';
 
     public function getFieldTypes()
     {
@@ -49,6 +55,10 @@ class LineItemFields extends AbstractObjectEnum
             'tax_lines' => 'TaxLine[]',
             'total_discount' => 'string',
             'discount_allocations' => 'DiscountAllocation[]',
+            'shop_id' => 'integer',
+            'fulfillment_order_id' => 'integer',
+            'line_item_id' => 'integer',
+            'inventory_item_id' => 'integer',
         ];
     }
 }
