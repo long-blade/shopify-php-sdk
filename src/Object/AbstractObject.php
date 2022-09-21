@@ -270,7 +270,7 @@ abstract class AbstractObject implements \JsonSerializable
         return AbstractObjectEnum::getInstance();
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->data;
     }
