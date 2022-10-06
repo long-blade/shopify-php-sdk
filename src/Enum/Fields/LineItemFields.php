@@ -11,6 +11,7 @@ class LineItemFields extends AbstractObjectEnum
     const ID = 'id';
     const PRICE = 'price';
     const PRODUCT_ID = 'product_id';
+    const PRODUCT_EXISTS = 'product_exists';
     const QUANTITY = 'quantity';
     const REQUIRES_SHIPPING = 'requires_shipping';
     const SKU = 'sku';
@@ -41,6 +42,7 @@ class LineItemFields extends AbstractObjectEnum
             'id' => 'integer',
             'price' => 'string',
             'product_id' => 'integer',
+            'product_exists' => 'boolean',
             'quantity' => 'integer',
             'requires_shipping' => 'boolean',
             'sku' => 'string',
