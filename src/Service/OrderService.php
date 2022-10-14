@@ -107,7 +107,7 @@ class OrderService extends AbstractService
      */
     public function cancel(Order &$order)
     {
-        $endpoint = '/orders/' . $order->id . '/cancel.json';
+        $endpoint = 'orders/' . $order->id . '/cancel.json';
         $response = $this->request($endpoint, 'POST');
         $order->setData($response['order']);
     }
