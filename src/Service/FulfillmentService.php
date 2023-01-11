@@ -27,10 +27,10 @@ class FulfillmentService extends AbstractService
         return $this->createObject(Fulfillment::class, $response['fulfillments']);
     }
 
-    public function create($orderId, Fulfillment &$fulfillment)
+    public function create(Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = 'orders/' . $orderId . '/fulfillments.json';
+        $endpoint = 'fulfillments.json';
         $response = $this->request(
             $endpoint,
             'POST',
@@ -41,10 +41,10 @@ class FulfillmentService extends AbstractService
         $fulfillment->setData($response['fulfillment']);
     }
 
-    public function update($orderId, Fulfillment &$fulfillment)
+    public function updateTracking(Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
-        $endpoint = 'orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '.json';
+        $endpoint = 'fulfillments/' . $fulfillment->id . '/update_tracking.json';
         $response = $this->request(
             $endpoint,
             'PUT',
@@ -55,24 +55,10 @@ class FulfillmentService extends AbstractService
         $fulfillment->setData($response['fulfillment']);
     }
 
-    public function complete($orderId, Fulfillment &$fulfillment)
+    public function cancel(Fulfillment &$fulfillment)
     {
-        $endpoint = 'orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/complete.json';
+        $endpoint = 'fulfillments/' . $fulfillment->id . '/cancel.json';
         $response = $this->request($endpoint, 'POST');
         $fulfillment->setData($response['fulfillment']);
-    }
-
-    public function cancel($orderId, Fulfillment &$fulfillment)
-    {
-        $endpoint = 'orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/cancel.json';
-        $response = $this->request($endpoint, 'POST');
-        $fulfillment->setData($response['fulfillment']);
-    }
-
-    public function open($orderId, Fulfillment &$fulfillment)
-    {
-        $endpoint = 'orders/' . $orderId . '/fulfillments/' . $fulfillment->id . '/open.json';
-        $response = $this->request($endpoint, 'POST');
-        $fulfillment->setData($response->fulfillment);
     }
 }
