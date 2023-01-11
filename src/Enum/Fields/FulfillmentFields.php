@@ -9,7 +9,7 @@ class FulfillmentFields extends AbstractObjectEnum
     const LINE_ITEMS = 'line_items';
     const NOTIFY_CUSTOMER = 'notify_customer';
     const TRACKING_INFO = 'tracking_info';
-    const LINE_ITEMS_BY_FULFILMENT_ORDER = 'line_items_by_fulfillment_order';
+    const LINE_ITEMS_BY_FULFILLMENT_ORDER = 'line_items_by_fulfillment_order';
     const ORDER_ID = 'order_id';
     const RECEIPT = 'receipt';
     const STATUS = 'status';
