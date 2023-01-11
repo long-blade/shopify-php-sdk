@@ -47,7 +47,7 @@ class FulfillmentService extends AbstractService
         $endpoint = 'fulfillments/' . $fulfillment->id . '/update_tracking.json';
         $response = $this->request(
             $endpoint,
-            'PUT',
+            'POST',
             [
                 'fulfillment' => $data
             ]
