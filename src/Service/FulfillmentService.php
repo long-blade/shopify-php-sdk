@@ -27,6 +27,14 @@ class FulfillmentService extends AbstractService
         return $this->createObject(Fulfillment::class, $response['fulfillments']);
     }
 
+    public function getFulfilledOrder(Fulfillment &$fulfillment)
+    {
+        $endpoint = 'fulfillment_orders/' . $fulfillment->id . '/fulfillments.json';
+        $response = $this->request($endpoint, 'GET');
+
+        return $this->createObject(Fulfillment::class, $response['fulfillments']);
+    }
+
     public function create(Fulfillment &$fulfillment)
     {
         $data = $fulfillment->exportData();
