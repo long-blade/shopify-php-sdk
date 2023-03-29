@@ -27,7 +27,7 @@ class FulfillmentFields extends AbstractObjectEnum
             'id' => 'integer',
             'line_items' => 'LineItem[]',
             'notify_customer' => 'boolean',
-            'tracking_info' => 'TrackingInfo[]',
+            'tracking_info' => 'TrackingInfo',
             'line_items_by_fulfillment_order' => 'LineItemByFulfillmentOrder[]',
             'order_id' => 'integer',
             'receipt' => "object",
